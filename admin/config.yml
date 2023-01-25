@@ -1,0 +1,1560 @@
+backend:
+  name: git-gateway
+  accept_roles:
+    - admin
+    - editor
+media_folder: theme/assets/images
+public_folder: /assets/images
+collections:
+  - name: pages
+    label: Pages
+    identifier_field: title
+    extension: md
+    create: false
+    delete: false
+    slug: '{{slug}}'
+    editor:
+      preview: false
+    folder: cms/pages
+    fields:
+      - label: Title
+        name: title
+        widget: string
+      - label: Publish Date
+        name: date
+        widget: datetime
+      - label: Layout
+        widget: hidden
+        name: layout
+        default: '{{slug}}.html'
+      - &ref_0
+        label: Seo
+        name: seo
+        widget: object
+        collapsed: true
+        fields:
+          - label: Title
+            name: title
+            widget: string
+            required: false
+          - label: Description
+            name: description
+            widget: string
+            required: false
+          - label: No index
+            name: noindex
+            widget: boolean
+            default: false
+            required: false
+          - label: Open Graph Title
+            name: og:title
+            widget: string
+            required: false
+          - label: Open Graph Image
+            name: og:image
+            widget: image
+            required: false
+            media_library:
+              config:
+                multiple: false
+          - label: Twitter Title
+            name: twitter:title
+            widget: string
+            default: summary
+            required: false
+          - label: Twitter Card
+            name: twitter:card
+            widget: string
+            default: summary
+            required: false
+          - label: Twitter Site
+            name: twitter:site
+            widget: string
+            required: false
+          - label: Twitter Creator
+            name: twitter:creator
+            widget: string
+            required: false
+          - label: Additional HTML tags
+            name: additional_tags
+            widget: text
+            required: false
+  - name: hot_picks
+    label: Hot Picks
+    folder: cms/hot-picks
+    create: true
+    identifier_field: name
+    extension: md
+    slug: '{{slug}}'
+    fields:
+      - hint: ''
+        name: title
+        label: Name
+        widget: string
+        required: true
+      - hint: ''
+        name: created-on
+        label: Created On
+        widget: datetime
+        required: false
+      - hint: ''
+        name: updated-on
+        label: Updated On
+        widget: datetime
+        required: false
+      - hint: ''
+        name: published-on
+        label: Published On
+        widget: datetime
+        required: false
+      - label: rich text
+        name: body
+        widget: markdown
+        required: false
+      - hint: ''
+        name: f_drop-date
+        label: Drop Date
+        widget: datetime
+        required: false
+      - hint: ''
+        name: f_image
+        label: image
+        widget: object
+        required: false
+        fields:
+          - hint: ''
+            name: url
+            label: Image
+            widget: image
+            required: false
+            allow_multiple: false
+          - hint: Image Alt
+            name: alt
+            label: alt
+            widget: string
+            required: false
+      - hint: ''
+        name: f_text
+        label: text
+        widget: string
+        required: false
+      - hint: ''
+        name: f_crypto-image
+        label: Crypto image
+        widget: object
+        required: false
+        fields:
+          - hint: ''
+            name: url
+            label: Image
+            widget: image
+            required: false
+            allow_multiple: false
+          - hint: Image Alt
+            name: alt
+            label: alt
+            widget: string
+            required: false
+      - label: Tags
+        widget: hidden
+        name: tags
+        default: hot-picks
+      - label: Layout
+        widget: hidden
+        name: layout
+        default: '[hot-picks].html'
+      - label: Publish Date
+        name: date
+        widget: datetime
+      - *ref_0
+  - name: events
+    label: Event CALENDARs
+    folder: cms/events
+    create: true
+    identifier_field: name
+    extension: md
+    slug: '{{slug}}'
+    fields:
+      - hint: ''
+        name: title
+        label: Name
+        widget: string
+        required: true
+      - hint: ''
+        name: created-on
+        label: Created On
+        widget: datetime
+        required: false
+      - hint: ''
+        name: updated-on
+        label: Updated On
+        widget: datetime
+        required: false
+      - hint: ''
+        name: published-on
+        label: Published On
+        widget: datetime
+        required: false
+      - label: text
+        name: body
+        widget: markdown
+        required: false
+      - hint: ''
+        name: f_drop-date
+        label: Drop Date
+        widget: datetime
+        required: false
+      - hint: ''
+        name: f_crypto-image
+        label: Crypto image
+        widget: object
+        required: false
+        fields:
+          - hint: ''
+            name: url
+            label: Image
+            widget: image
+            required: false
+            allow_multiple: false
+          - hint: Image Alt
+            name: alt
+            label: alt
+            widget: string
+            required: false
+      - hint: ''
+        name: f_image
+        label: Image
+        widget: object
+        required: false
+        fields:
+          - hint: ''
+            name: url
+            label: Image
+            widget: image
+            required: false
+            allow_multiple: false
+          - hint: Image Alt
+            name: alt
+            label: alt
+            widget: string
+            required: false
+      - label: Tags
+        widget: hidden
+        name: tags
+        default: events
+      - label: Layout
+        widget: hidden
+        name: layout
+        default: '[events].html'
+      - label: Publish Date
+        name: date
+        widget: datetime
+      - *ref_0
+  - label: Theme Settings
+    name: settings
+    identifier_field: title
+    extension: json
+    create: false
+    delete: false
+    slug: '{{slug}}'
+    editor:
+      preview: false
+    files:
+      - label: General
+        name: site
+        file: cms/_data/settings/site.json
+        fields:
+          - label: Title
+            name: title
+            widget: hidden
+            default: General
+          - hint: Full domain url (needed for a correct sitemap file)
+            name: domain
+            label: Domain
+            widget: string
+            required: false
+          - name: favicon
+            label: Favicon
+            widget: image
+            allow_multiple: false
+            required: false
+          - name: apple_touch_icon
+            label: Apple Touch Icon
+            widget: image
+            allow_multiple: false
+            required: false
+          - name: header_additional_content
+            label: Additional Content Header
+            hint: Content here will be placed before </head> tag
+            widget: text
+            required: false
+          - name: footer_additional_content
+            label: Additional Content Footer
+            hint: Content here will be placed before </body> tag
+            widget: text
+            required: false
+          - name: images_optimization
+            label: Images Optimization
+            widget: object
+            collapsed: false
+            fields:
+              - label: Image Formats
+                name: formats
+                widget: select
+                multiple: true
+                options:
+                  - label: Avif
+                    value: avif
+                  - label: Webp
+                    value: webp
+              - label: Image Dimensions
+                name: dimensions
+                widget: select
+                multiple: true
+                options:
+                  - label: '500'
+                    value: 500
+                  - label: '800'
+                    value: 800
+                  - label: '1080'
+                    value: 1080
+                  - label: '1600'
+                    value: 1600
+                  - label: '2000'
+                    value: 2000
+                  - label: '2600'
+                    value: 2600
+      - label: Colors
+        name: colors
+        file: cms/_data/colors.json
+        fields:
+          - label: Title
+            name: title
+            widget: hidden
+            default: Colors
+      - label: Texts
+        name: texts
+        file: cms/_data/texts.json
+        fields:
+          - label: Title
+            name: title
+            widget: hidden
+            default: Texts
+          - hint: 'Original text: NFT Agenda, key: 2086fb30'
+            label: Text
+            name: 2086fb30
+            widget: string
+          - hint: 'Original text: List Your NFT Project, key: 2f942b4a'
+            label: Text
+            name: 2f942b4a
+            widget: string
+          - hint: 'Original text: Hot Upcoming Drops, key: -71af704d'
+            label: Text
+            name: '-71af704d'
+            widget: string
+          - hint: 'Original text: Upcoming Drops, key: -25e41ca0'
+            label: Text
+            name: '-25e41ca0'
+            widget: string
+          - hint: 'Original text: Blog - Coming Soon, key: -29709c17'
+            label: Text
+            name: '-29709c17'
+            widget: string
+          - hint: 'Original text: Contact Us, key: 7f2746de'
+            label: Text
+            name: 7f2746de
+            widget: string
+          - hint: 'Original text: How to clone into other project?, key: -3f74c5a2'
+            label: Text
+            name: '-3f74c5a2'
+            widget: string
+          - hint: >-
+              Original text: Press "Ctrl + E" or "Cmd + E" in the Designer and
+              enable ", key: 3e70f81e
+            label: Text
+            name: 3e70f81e
+            widget: string
+          - hint: 'Original text: Select on-page element, key: 503f1c95'
+            label: Text
+            name: 503f1c95
+            widget: string
+          - hint: 'Original text: "., key: 44c'
+            label: Text
+            name: 44c
+            widget: string
+          - hint: 'Original text: Search for the class named, ", key: 2bce029b'
+            label: Text
+            name: 2bce029b
+            widget: string
+          - hint: 'Original text: Cloneable Area, key: 5f158f16'
+            label: Text
+            name: 5f158f16
+            widget: string
+          - hint: 'Original text: Copy the element , key: -50a849e2'
+            label: Text
+            name: '-50a849e2'
+            widget: string
+          - hint: 'Original text: inside, key: -468f3004'
+            label: Text
+            name: '-468f3004'
+            widget: string
+          - hint: >-
+              Original text:  this container to your own project., key:
+              -235e2c28
+            label: Text
+            name: '-235e2c28'
+            widget: string
+          - hint: >-
+              Original text: Rename the classes accordingly if they are clashing
+              with your project., key: -52a2822a
+            label: Text
+            name: '-52a2822a'
+            widget: string
+          - hint: >-
+              Original text: Ensure custom code from the in-page setting has
+              been copied into your project as well (if there's any)., key:
+              38565d28
+            label: Text
+            name: 38565d28
+            widget: text
+          - hint: 'Original text: ''Page Trigger'', key: b089b19'
+            label: Text
+            name: b089b19
+            widget: string
+          - hint: >-
+              Original text:  interaction can't be copied directly. You can only
+              clone the whole project, or rebuild it., key: 38357c88
+            label: Text
+            name: 38357c88
+            widget: text
+          - hint: >-
+              Original text: A simple trick to copy the 'Page Trigger'
+              interaction into another project is as below:, key: -5555be1f
+            label: Text
+            name: '-5555be1f'
+            widget: string
+          - hint: 'Original text: 1., key: 61d'
+            label: Text
+            name: 61d
+            widget: string
+          - hint: 'Original text:  Create a dummy element., key: -19ce2d3'
+            label: Text
+            name: '-19ce2d3'
+            widget: string
+          - hint: 'Original text: 2., key: 63c'
+            label: Text
+            name: 63c
+            widget: string
+          - hint: >-
+              Original text:  Apply any type of 'Element trigger' into the dummy
+              element and select the 'Page Trigger' animation., key: -68ff55bd
+            label: Text
+            name: '-68ff55bd'
+            widget: text
+          - hint: 'Original text: 3., key: 65b'
+            label: Text
+            name: 65b
+            widget: string
+          - hint: >-
+              Original text:  Copy the dummy element with the animations applied
+              into your new project., key: 2d02be43
+            label: Text
+            name: 2d02be43
+            widget: string
+          - hint: 'Original text: 4., key: 67a'
+            label: Text
+            name: 67a
+            widget: string
+          - hint: >-
+              Original text:  The animation should have been copied into your
+              project and you can reapply the 'Page Trigger' animation into your
+              project., key: 340eeee5
+            label: Text
+            name: 340eeee5
+            widget: text
+          - hint: >-
+              Original text: If you have further inquiry or need assistance,
+              feel free to , key: -243bb7b7
+            label: Text
+            name: '-243bb7b7'
+            widget: string
+          - hint: 'Original text: contact, key: 38b72420'
+            label: Text
+            name: 38b72420
+            widget: string
+          - hint: 'Original text: us., key: 1c550'
+            label: Text
+            name: 1c550
+            widget: string
+          - hint: 'Original text: Lastly, please , key: -7a9b39e1'
+            label: Text
+            name: '-7a9b39e1'
+            widget: string
+          - hint: >-
+              Original text: do not copy this project and claim it as your own,
+              key: -6327ba81
+            label: Text
+            name: '-6327ba81'
+            widget: string
+          - hint: >-
+              Original text: . We wish to continue sharing and giving to the
+              community. In order to do so, we will need your cooperation and
+              full support. Thank you very much,, key: -214025a9
+            label: Text
+            name: '-214025a9'
+            widget: text
+          - hint: 'Original text: Changing The Game, key: 5c3b8b4'
+            label: Text
+            name: 5c3b8b4
+            widget: string
+          - hint: 'Original text: As you navigate the , key: -19f20771'
+            label: Text
+            name: '-19f20771'
+            widget: string
+          - hint: >-
+              Original text: ultimate Solana blockchain Play 2 Earn game, key:
+              7755709f
+            label: Text
+            name: 7755709f
+            widget: string
+          - hint: >-
+              Original text: , you can collect $NEO coin and ultra-rare items.,
+              key: -40c2163c
+            label: Text
+            name: '-40c2163c'
+            widget: string
+          - hint: 'Original text: Learn More, key: -52bd880f'
+            label: Text
+            name: '-52bd880f'
+            widget: string
+          - hint: 'Original text: Hot Drops, key: -f3ca66f'
+            label: Text
+            name: '-f3ca66f'
+            widget: string
+          - hint: 'Original text: See All, key: -27627fec'
+            label: Text
+            name: '-27627fec'
+            widget: string
+          - hint: 'Original text: No items found., key: 3d503d2b'
+            label: Text
+            name: 3d503d2b
+            widget: string
+          - hint: >-
+              Original text: We’re not financial advisers. Every information
+              provided on this page should not be considered as financial or
+              investment advice, including all the information regarding
+              featured projects on the website. Always do your own research!
+              Thank you., key: -446f03f2
+            label: Text
+            name: '-446f03f2'
+            widget: text
+          - hint: 'Original text: List your NFT, key: -156cb6af'
+            label: Text
+            name: '-156cb6af'
+            widget: string
+          - hint: 'Original text: Contact us, key: 7f274abe'
+            label: Text
+            name: 7f274abe
+            widget: string
+          - hint: 'Original text: © All rights reserved. NFT AGENDA, key: 5f09567d'
+            label: Text
+            name: 5f09567d
+            widget: string
+          - hint: 'Original text: follow us on twitter, key: -4a6bba3b'
+            label: Text
+            name: '-4a6bba3b'
+            widget: string
+          - hint: 'Original text: Happy hunting, key: 5f4ac20f'
+            label: Text
+            name: 5f4ac20f
+            widget: string
+          - hint: 'Original text: minting time, key: -78f91553'
+            label: Text
+            name: '-78f91553'
+            widget: string
+          - hint: 'Original text: holders heaven, key: -537e7ec'
+            label: Text
+            name: '-537e7ec'
+            widget: string
+          - hint: 'Original text: future is here, key: 45be13c9'
+            label: Text
+            name: 45be13c9
+            widget: string
+          - hint: 'Original text: BLOCKCHAIN IS THE FUTURE, key: 4468885c'
+            label: Text
+            name: 4468885c
+            widget: string
+          - hint: 'Original text: COLLECTORS ASSEMBLE, key: -1ba54cd4'
+            label: Text
+            name: '-1ba54cd4'
+            widget: string
+          - hint: 'Original text: follow us on instagram, key: -544de97c'
+            label: Text
+            name: '-544de97c'
+            widget: string
+          - hint: 'Original text: whitelist giveaways, key: 1ea34a3b'
+            label: Text
+            name: 1ea34a3b
+            widget: string
+          - hint: 'Original text: stay cool, key: -77915750'
+            label: Text
+            name: '-77915750'
+            widget: string
+          - hint: 'Original text: i need more nfts, key: b75c1af'
+            label: Text
+            name: b75c1af
+            widget: string
+          - hint: 'Original text: what''s the utility bro, key: 65fb3b0c'
+            label: Text
+            name: 65fb3b0c
+            widget: string
+          - hint: 'Original text: when drop, key: -443997eb'
+            label: Text
+            name: '-443997eb'
+            widget: string
+          - hint: 'Original text: i love staking, key: -19a4c2a0'
+            label: Text
+            name: '-19a4c2a0'
+            widget: string
+          - hint: 'Original text: but does it have a game, key: -2da8d904'
+            label: Text
+            name: '-2da8d904'
+            widget: string
+          - hint: 'Original text: Blog, key: 1fa3c2'
+            label: Text
+            name: 1fa3c2
+            widget: string
+          - hint: 'Original text: Page Not Found, key: -40b0787c'
+            label: Text
+            name: '-40b0787c'
+            widget: string
+          - hint: >-
+              Original text: The page you are looking for doesn't exist or has
+              been moved, key: 556d64d8
+            label: Text
+            name: 556d64d8
+            widget: string
+          - hint: 'Original text: upcoming drops, key: 17980760'
+            label: Text
+            name: '17980760'
+            widget: string
+          - hint: 'Original text: IT ALL STARTS WITH AGENDA, key: -1fcfe515'
+            label: Text
+            name: '-1fcfe515'
+            widget: string
+          - hint: >-
+              Original text: We have created a wide range of plans that suit
+              your needs. , key: -1a49bfd8
+            label: Text
+            name: '-1a49bfd8'
+            widget: string
+          - hint: 'Original text: Choose the best one!, key: 299dbc1f'
+            label: Text
+            name: 299dbc1f
+            widget: string
+          - hint: 'Original text: We accept crypto, key: -1d310ed9'
+            label: Text
+            name: '-1d310ed9'
+            widget: string
+          - hint: 'Original text: Upcoming Projects, key: 719592fe'
+            label: Text
+            name: 719592fe
+            widget: string
+          - hint: 'Original text: Basic, key: 3cfe40e'
+            label: Text
+            name: 3cfe40e
+            widget: string
+          - hint: 'Original text: Basic NFT listing, key: 4faf12ee'
+            label: Text
+            name: 4faf12ee
+            widget: string
+          - hint: 'Original text: Free, key: 218a8c'
+            label: Text
+            name: 218a8c
+            widget: string
+          - hint: 'Original text: What’s included, key: -6c960ec2'
+            label: Text
+            name: '-6c960ec2'
+            widget: string
+          - hint: >-
+              Original text: Your project listed in Upcoming Events section.,
+              key: -6dfffee8
+            label: Text
+            name: '-6dfffee8'
+            widget: string
+          - hint: 'Original text: Get listed in 48 hours, key: -465445ab'
+            label: Text
+            name: '-465445ab'
+            widget: string
+          - hint: 'Original text: Get started, key: 667a5d97'
+            label: Text
+            name: 667a5d97
+            widget: string
+          - hint: 'Original text: Popular, key: 4bbd8ab9'
+            label: Text
+            name: 4bbd8ab9
+            widget: string
+          - hint: 'Original text: Gold Plan, key: 274bcae9'
+            label: Text
+            name: 274bcae9
+            widget: string
+          - hint: >-
+              Original text: Want to get more eyes on your NFT project? This is
+              a perfect plan for you!, key: 7676a512
+            label: Text
+            name: 7676a512
+            widget: string
+          - hint: 'Original text: $15, key: 8d48'
+            label: Text
+            name: 8d48
+            widget: string
+          - hint: >-
+              Original text: Your project listed in Hot Drops section., key:
+              37425fa4
+            label: Text
+            name: 37425fa4
+            widget: string
+          - hint: >-
+              Original text: Top space on our Landing page for the Hot Drop.,
+              key: 5745416e
+            label: Text
+            name: 5745416e
+            widget: string
+          - hint: 'Original text: Get listed in less than 24 hours, key: 4a36e6b'
+            label: Text
+            name: 4a36e6b
+            widget: string
+          - hint: "Original text: Your project listing announced on our Twitter page\_(, key: 4cc62544"
+            label: Text
+            name: 4cc62544
+            widget: string
+          - hint: 'Original text: 187,5k followers), key: -5b250f7e'
+            label: Text
+            name: '-5b250f7e'
+            widget: string
+          - hint: "Original text: Your project listing announced on our Instagram page\_(, key: -2d9374db"
+            label: Text
+            name: '-2d9374db'
+            widget: string
+          - hint: 'Original text: 17,7k followers), key: -199f91c6'
+            label: Text
+            name: '-199f91c6'
+            widget: string
+          - hint: 'Original text: GIF for your listing, key: -26d8e176'
+            label: Text
+            name: '-26d8e176'
+            widget: string
+          - hint: >-
+              Original text: Get noticed by email about your listing., key:
+              -5178572b
+            label: Text
+            name: '-5178572b'
+            widget: string
+          - hint: 'Original text: Hot Drops +, key: -32acc2a4'
+            label: Text
+            name: '-32acc2a4'
+            widget: string
+          - hint: 'Original text: VIP, key: 14bfd'
+            label: Text
+            name: 14bfd
+            widget: string
+          - hint: >-
+              Original text: We built this plan for those who want to bring
+              their NFT project to the next level., key: -3160c574
+            label: Text
+            name: '-3160c574'
+            widget: string
+          - hint: 'Original text: $44, key: 8da4'
+            label: Text
+            name: 8da4
+            widget: string
+          - hint: 'Original text: Everything from Gold Plan, key: 543cbae0'
+            label: Text
+            name: 543cbae0
+            widget: string
+          - hint: >-
+              Original text: 2 posts from us on our Twitter page (, key:
+              -51dd044e
+            label: Text
+            name: '-51dd044e'
+            widget: string
+          - hint: >-
+              Original text: 2 posts from us on our Instagram page (, key:
+              50279e13
+            label: Text
+            name: '50279e13'
+            widget: string
+          - hint: 'Original text: For individuals, key: 582dbc03'
+            label: Text
+            name: 582dbc03
+            widget: string
+          - hint: >-
+              Original text: Lorem ipsum dolor sit amet doloroli sitiol conse
+              ctetur adipiscing elit., key: 3163d924
+            label: Text
+            name: 3163d924
+            widget: string
+          - hint: 'Original text: €99, key: 7aaccc'
+            label: Text
+            name: 7aaccc
+            widget: string
+          - hint: 'Original text: /monthly, key: 5c0cccfe'
+            label: Text
+            name: 5c0cccfe
+            widget: string
+          - hint: 'Original text: All analytics features, key: 30e25c96'
+            label: Text
+            name: 30e25c96
+            widget: string
+          - hint: 'Original text: Up to 250,000 tracked visits, key: -786d3df3'
+            label: Text
+            name: '-786d3df3'
+            widget: string
+          - hint: 'Original text: Normal support, key: -46d6324a'
+            label: Text
+            name: '-46d6324a'
+            widget: string
+          - hint: 'Original text: Up to 3 team members, key: -3e2c0bd'
+            label: Text
+            name: '-3e2c0bd'
+            widget: string
+          - hint: 'Original text: For startups, key: 497c072d'
+            label: Text
+            name: 497c072d
+            widget: string
+          - hint: 'Original text: Pro, key: 13a8d'
+            label: Text
+            name: 13a8d
+            widget: string
+          - hint: 'Original text: €199, key: edacee5'
+            label: Text
+            name: edacee5
+            widget: string
+          - hint: 'Original text: Up to 1,000,000 tracked visits, key: 35fb2925'
+            label: Text
+            name: 35fb2925
+            widget: string
+          - hint: 'Original text: Premium support, key: 6fc35ae6'
+            label: Text
+            name: 6fc35ae6
+            widget: string
+          - hint: 'Original text: Up to 10 team members, key: -9c41769'
+            label: Text
+            name: '-9c41769'
+            widget: string
+          - hint: 'Original text: For big companies, key: -50de507c'
+            label: Text
+            name: '-50de507c'
+            widget: string
+          - hint: 'Original text: Enterprise, key: 46f90f81'
+            label: Text
+            name: 46f90f81
+            widget: string
+          - hint: 'Original text: €399, key: edad667'
+            label: Text
+            name: edad667
+            widget: string
+          - hint: 'Original text: Up to 5,000,000 tracked visits, key: 260164a1'
+            label: Text
+            name: 260164a1
+            widget: string
+          - hint: 'Original text: Dedicated support, key: -5ebe0582'
+            label: Text
+            name: '-5ebe0582'
+            widget: string
+          - hint: 'Original text: Up to 50 team members, key: 5da9919b'
+            label: Text
+            name: 5da9919b
+            widget: string
+          - hint: 'Original text: £99, key: 26b03'
+            label: Text
+            name: 26b03
+            widget: string
+          - hint: 'Original text: £199, key: 4ad78e'
+            label: Text
+            name: 4ad78e
+            widget: string
+          - hint: 'Original text: £399, key: 4adf10'
+            label: Text
+            name: 4adf10
+            widget: string
+          - hint: >-
+              Original text: Fill out the form to list your NFT project, key:
+              73225ee3
+            label: Text
+            name: 73225ee3
+            widget: string
+          - hint: 'Original text: On what blocchain is your project, key: -150224f6'
+            label: Text
+            name: '-150224f6'
+            widget: string
+          - hint: 'Original text: Ethereum, key: -50bf6be9'
+            label: Text
+            name: '-50bf6be9'
+            widget: string
+          - hint: 'Original text: Solana, key: -6c0f019c'
+            label: Text
+            name: '-6c0f019c'
+            widget: string
+          - hint: 'Original text: Polygon, key: 4b86ed1a'
+            label: Text
+            name: 4b86ed1a
+            widget: string
+          - hint: 'Original text: Cardano, key: -7bc3034e'
+            label: Text
+            name: '-7bc3034e'
+            widget: string
+          - hint: 'Original text: Other, key: 48f8ef0'
+            label: Text
+            name: 48f8ef0
+            widget: string
+          - hint: 'Original text: Details, key: -3fee75de'
+            label: Text
+            name: '-3fee75de'
+            widget: string
+          - hint: 'Original text: Upload your NFT image at , key: -13e9c84a'
+            label: Text
+            name: '-13e9c84a'
+            widget: string
+          - hint: 'Original text: https://imgbb.com/ , key: -51511988'
+            label: Text
+            name: '-51511988'
+            widget: string
+          - hint: >-
+              Original text: and copy paste the link in the field., key:
+              -12bbadca
+            label: Text
+            name: '-12bbadca'
+            widget: string
+          - hint: >-
+              Original text: want us to announce your project on our twitter
+              page? (187,4k followers), key: 5d623e1b
+            label: Text
+            name: 5d623e1b
+            widget: string
+          - hint: 'Original text: ‍, key: 200d'
+            label: Text
+            name: 200d
+            widget: string
+          - hint: 'Original text: 5$ special offer, key: 5685464'
+            label: Text
+            name: '5685464'
+            widget: string
+          - hint: >-
+              Original text: If yes, fill out the form under. If no, just skip
+              this part and click submit., key: 3816cdf9
+            label: Text
+            name: 3816cdf9
+            widget: string
+          - hint: >-
+              Original text: Choose the crypto you want to pay with, key:
+              -3991ca05
+            label: Text
+            name: '-3991ca05'
+            widget: string
+          - hint: 'Original text: ETH, key: 10d79'
+            label: Text
+            name: 10d79
+            widget: string
+          - hint: 'Original text: SOL, key: 14170'
+            label: Text
+            name: '14170'
+            widget: string
+          - hint: 'Original text: POLY, key: 258fcc'
+            label: Text
+            name: 258fcc
+            widget: string
+          - hint: 'Original text: USDT TRC20, key: 5d4efb91'
+            label: Text
+            name: 5d4efb91
+            widget: string
+          - hint: >-
+              Original text: Click to copy our crypto address. Send the crypto
+              and paste the Transaction Scan Link or Transaction Address, key:
+              7bd1c6d0
+            label: Text
+            name: 7bd1c6d0
+            widget: text
+          - hint: 'Original text: Address, key: 1ed033d4'
+            label: Text
+            name: 1ed033d4
+            widget: string
+          - hint: 'Original text: CARDANO, key: 4bcff0b2'
+            label: Text
+            name: 4bcff0b2
+            widget: string
+          - hint: >-
+              Original text: Thank you! Your submission has been received!, key:
+              5a0ea5a1
+            label: Text
+            name: 5a0ea5a1
+            widget: string
+          - hint: >-
+              Original text: Oops! Something went wrong while submitting the
+              form., key: -7c112e99
+            label: Text
+            name: '-7c112e99'
+            widget: string
+          - hint: 'Original text: 15$ - gold plan, key: -242a8eea'
+            label: Text
+            name: '-242a8eea'
+            widget: string
+          - hint: >-
+              Original text: We will contact you over Twitter or E-mail
+              regarding your Twitter / Instagram posts, key: -7314ef09
+            label: Text
+            name: '-7314ef09'
+            widget: string
+          - hint: 'Original text: 44$ - vip plan, key: -2bfe2025'
+            label: Text
+            name: '-2bfe2025'
+            widget: string
+          - hint: 'Original text: success, key: -6f4abffd'
+            label: Text
+            name: '-6f4abffd'
+            widget: string
+      - label: Links
+        name: links
+        file: cms/_data/links.json
+        fields:
+          - label: Title
+            name: title
+            widget: hidden
+            default: Links
+          - hint: 'Original link: /, key: 2f'
+            label: Link
+            name: 2f
+            widget: string
+          - hint: 'Original link: /list-your-project-price, key: -58691205'
+            label: Link
+            name: '-58691205'
+            widget: string
+          - hint: 'Original link: /hot-picks, key: 6b63c3a3'
+            label: Link
+            name: 6b63c3a3
+            widget: string
+          - hint: 'Original link: /upcoming-events, key: -935b925'
+            label: Link
+            name: '-935b925'
+            widget: string
+          - hint: 'Original link: #, key: 23'
+            label: Link
+            name: '23'
+            widget: string
+          - hint: >-
+              Original link: https://www.sketchzlab.com/resources/support, key:
+              -31ecbe92
+            label: Link
+            name: '-31ecbe92'
+            widget: string
+          - hint: 'Original link: https://twitter.com/, key: 636eb9b8'
+            label: Link
+            name: 636eb9b8
+            widget: string
+          - hint: 'Original link: https://www.instagram.com/nftagenda, key: 512874f8'
+            label: Link
+            name: 512874f8
+            widget: string
+          - hint: 'Original link: mailto:nftagendacalendar@gmail.com, key: 55a096f'
+            label: Link
+            name: 55a096f
+            widget: string
+          - hint: >-
+              Original link: https://www.buymeacoffee.com/sketchzlab, key:
+              40ff4a06
+            label: Link
+            name: 40ff4a06
+            widget: string
+          - hint: 'Original link: /free-list-your-project, key: 271d961c'
+            label: Link
+            name: 271d961c
+            widget: string
+          - hint: 'Original link: /gold-listing, key: -472a103a'
+            label: Link
+            name: '-472a103a'
+            widget: string
+          - hint: 'Original link: /vip-listing, key: 68855545'
+            label: Link
+            name: '68855545'
+            widget: string
+          - hint: 'Original link: https://imgbb.com/, key: 372eeea8'
+            label: Link
+            name: 372eeea8
+            widget: string
+      - label: Images
+        name: images
+        file: cms/_data/images.json
+        fields:
+          - label: Title
+            name: title
+            widget: hidden
+            default: Images
+          - label: Image
+            name: i388c993
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: i64558b81
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: i256fc341
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: i7e65ef42
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: i59792047
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: a0e7702
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: i5e7c3fe8
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: 9704ad
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: 76a4b927
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-a4ec514'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-65159d25'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: 10d4d746
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-375a3b3a'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: 2dcb0051
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-416cf412'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '74595e49'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-1eda676'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-8422bb4'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-cca2f2c'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-3671dde2'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-2b9c301a'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: aec92eb
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-412d4e4d'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-48edb70c'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: 1cf70862
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-67871a31'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: 55b0cfa4
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: 4e7e0d8e
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-2b1beb3c'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: 30b82496
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: 42b824ba
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-399f2601'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-39910e80'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-3982f6ff'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: 557b94ed
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: 76690fd4
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+publish_mode: editorial_workflow

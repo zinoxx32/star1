@@ -1,0 +1,29 @@
+<div class="crypto-marquee">
+    <div class="marquee-css w-embed">
+      <style>
+.marquee-track {
+  position: absolute;
+  white-space: nowrap;
+  will-change: transform;
+    animation: marquee 50s linear infinite reverse;
+}
+.marquee-track:hover {
+-moz-animation-play-state: paused;
+-webkit-animation-play-state: paused;
+animation-play-state: paused;
+}
+@keyframes marquee {
+  from { transform: translateX(-50%); }
+  to { transform: translateX(0%); }
+}
+</style>
+    </div>
+    <div class="marquee-track">
+      <div class="marquee-item">
+        <div class="marquee-coin hidden"></div>
+      </div>
+      <div class="marquee-item"></div>
+      <div class="marquee-item"></div>
+      <div class="marquee-item"></div>
+    </div>
+  </div>
